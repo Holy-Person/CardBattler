@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvynj1e32wykt"]
+
+[ext_resource type="Script" path="res://components/card_field.gd" id="1_4h2s4"]
+
+[node name="CardField" type="Panel"]
+offset_right = 100.0
+offset_bottom = 125.0
+mouse_filter = 2
+script = ExtResource("1_4h2s4")
+
+[node name="Image" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -50.0
+offset_right = 50.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 2
+expand_mode = 4
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 1
+offset_right = 47.0
+offset_bottom = 26.0
+size_flags_horizontal = 3
+text = "Name"
+
+[node name="HP" type="ColorRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = -5.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 5.0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.607843, 0, 0.0980392, 1)
+
+[node name="Label" type="Label" parent="HP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AP" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 5.0
+offset_bottom = 5.0
+grow_horizontal = 0
+grow_vertical = 0
+mouse_filter = 2
+color = Color(0.0470588, 0.133333, 1, 1)
+
+[node name="Label" type="Label" parent="AP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="CardBattler"
+run/main_scene="res://scenes/battle.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/always_on_top.editor=true
 
 [rendering]
 

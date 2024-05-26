@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cr0325rgmfehh"]
+
+[ext_resource type="Script" path="res://components/field_panel.gd" id="1_1a6ei"]
+
+[node name="field_panel" type="PanelContainer"]
+custom_minimum_size = Vector2(100, 125)
+script = ExtResource("1_1a6ei")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 2
+flat = true
