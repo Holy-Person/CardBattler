@@ -11,7 +11,7 @@ var card : CardField
 
 
 func has_card() -> bool:
-	if card: return true
+	if is_instance_valid(card): return true
 	return false
 
 func get_card() -> CardField:

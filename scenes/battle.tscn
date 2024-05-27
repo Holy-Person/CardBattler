@@ -1,10 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bglfjofq8iamc"]
+[gd_scene load_steps=3 format=3 uid="uid://bglfjofq8iamc"]
 
 [ext_resource type="Script" path="res://scenes/field.gd" id="1_2ewh4"]
+[ext_resource type="Theme" uid="uid://dnfydxh5ba4ld" path="res://resources/theme_field.tres" id="1_o141i"]
 
 [node name="battle" type="Node"]
 
-[node name="GridContainer" type="GridContainer" parent="."]
+[node name="Field" type="GridContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -16,9 +17,7 @@ offset_right = 20.0
 offset_bottom = 20.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/h_separation = 9
-theme_override_constants/v_separation = 9
-columns = 4
+theme = ExtResource("1_o141i")
 script = ExtResource("1_2ewh4")
 
 [node name="Cards" type="Control" parent="."]
