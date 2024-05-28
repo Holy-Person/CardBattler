@@ -13,6 +13,9 @@ var attack : int
 var has_moved : bool
 var has_attacked : bool
 
+var movement_range : int = 1
+var attack_range : int = 1
+
 ## The current position of the card.
 var pos : Vector2i
 

@@ -83,7 +83,9 @@ func field_click(pos : Vector2i) -> void:
 			if selected_field.has_card():
 				selected_card = selected_field.get_card()
 				interaction_type = InteractionType.CARD
+				highlight_from_card(selected_card)
 		InteractionType.CARD:
+			clear_highlights()
 			interaction_type = InteractionType.SELECT
 			if !selected_card: return
 
@@ -91,7 +93,29 @@ func field_click(pos : Vector2i) -> void:
 			elif selected_field.get_card() == selected_card: pass
 			elif selected_field.has_card(): attack_card_at(selected_card, pos)
 			selected_card = null
-			return
+
+
+
+## Very basic, panels should have these with an always-on-top effect preferrably, only being clickable then.
+func highlight_from_card(card: CardField) -> void:
+	for i in field_size * field_size:
+		@warning_ignore("integer_division")
+		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
+		if abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.movement_range && !field_list[pos.y][pos.x].has_card():
+			var highlight : Label = Label.new()
+			highlight.text = "move"
+			$"../Highlights".add_child(highlight)
+			highlight.global_position = field_list[pos.y][pos.x].global_position + field_list[pos.y][pos.x].size / 2
+		elif abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.attack_range && field_list[pos.y][pos.x].has_card():
+			if field_list[pos.y][pos.x].get_card() == card: continue
+			var highlight : Label = Label.new()
+			highlight.text = "attack"
+			$"../Highlights".add_child(highlight)
+			highlight.global_position = field_list[pos.y][pos.x].global_position + field_list[pos.y][pos.x].size / 2
+
+func clear_highlights() -> void:
+	for child in $"../Highlights".get_children():
+		child.queue_free()
 
 
 
