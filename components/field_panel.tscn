@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr0325rgmfehh"]
+[gd_scene load_steps=4 format=3 uid="uid://cr0325rgmfehh"]
 
 [ext_resource type="Script" path="res://components/field_panel.gd" id="1_1a6ei"]
 [ext_resource type="Theme" uid="uid://dnfydxh5ba4ld" path="res://resources/theme_field.tres" id="1_wy65j"]
+[ext_resource type="Script" path="res://components/highlight.gd" id="3_sag5h"]
 
 [node name="field_panel" type="PanelContainer"]
 custom_minimum_size = Vector2(100, 125)
@@ -11,3 +12,12 @@ script = ExtResource("1_1a6ei")
 [node name="Button" type="Button" parent="."]
 self_modulate = Color(1, 1, 1, 0)
 layout_mode = 2
+
+[node name="Highlight" type="Control" parent="."]
+visible = false
+z_index = 50
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+script = ExtResource("3_sag5h")

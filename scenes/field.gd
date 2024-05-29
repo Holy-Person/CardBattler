@@ -16,17 +16,6 @@ var field_panel = load("res://components/field_panel.tscn")
 ## A card on the field.
 var card_field = load("res://components/card_field.tscn")
 
-var interaction_type : int = 1 :
-	set(val):
-		interaction_type = val
-		$"../Label".text = str(InteractionType.keys()[val])
-
-enum InteractionType {
-	NONE,
-	SELECT,
-	CARD
-}
-
 ## The currently selected card, used with InteractionType.CARD to control the card.
 var selected_card : CardField
 
@@ -78,48 +67,51 @@ func test() -> void:
 func field_click(pos : Vector2i) -> void:
 	var selected_field : FieldPanel = field_list[pos.y][pos.x]
 
-	match interaction_type:
-		InteractionType.SELECT:
-			if selected_field.has_card():
-				selected_card = selected_field.get_card()
-				interaction_type = InteractionType.CARD
-				highlight_from_card(selected_card)
-		InteractionType.CARD:
-			clear_highlights()
-			interaction_type = InteractionType.SELECT
+	match selected_field.get_type():
+		FieldPanel.PanelType.CARD:
+			# Check if card is your own here.
+			if selected_card == selected_field.get_card():
+				select_card(null)
+				return
+			select_card(selected_field.get_card())
+		FieldPanel.PanelType.MOVE:
 			if !selected_card: return
+			move_card_to(selected_card, pos)
+			select_card(null)
+		FieldPanel.PanelType.ATTACK:
+			if !selected_card: return
+			attack_card_at(selected_card, pos)
+			select_card(null)
 
-			if !selected_field.has_card(): move_card_to(selected_card, pos)
-			elif selected_field.get_card() == selected_card: pass
-			elif selected_field.has_card(): attack_card_at(selected_card, pos)
-			selected_card = null
+
+
+func select_card(card : CardField) -> void:
+	clear_highlights()
+	selected_card = card
+	if !card: return
+	highlight_from_card(card)
 
 
 
-## Very basic, panels should have these with an always-on-top effect preferrably, only being clickable then.
-func highlight_from_card(card: CardField) -> void:
+func highlight_from_card(card : CardField) -> void:
 	for i in field_size * field_size:
 		@warning_ignore("integer_division")
 		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
 		if abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.movement_range && !field_list[pos.y][pos.x].has_card():
-			var highlight : Label = Label.new()
-			highlight.text = "move"
-			$"../Highlights".add_child(highlight)
-			highlight.global_position = field_list[pos.y][pos.x].global_position + field_list[pos.y][pos.x].size / 2
+			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.MOVE)
 		elif abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.attack_range && field_list[pos.y][pos.x].has_card():
 			if field_list[pos.y][pos.x].get_card() == card: continue
-			var highlight : Label = Label.new()
-			highlight.text = "attack"
-			$"../Highlights".add_child(highlight)
-			highlight.global_position = field_list[pos.y][pos.x].global_position + field_list[pos.y][pos.x].size / 2
+			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.ATTACK)
 
 func clear_highlights() -> void:
-	for child in $"../Highlights".get_children():
-		child.queue_free()
+	for i in field_size * field_size:
+		@warning_ignore("integer_division")
+		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
+		field_list[pos.y][pos.x].clear_highlight()
 
 
 
-func set_card_to(card: CardField, pos : Vector2i) -> void:
+func set_card_to(card : CardField, pos : Vector2i) -> void:
 	#card.owner_id = multiplayer.get_remote_sender_id() # No multiplayer yet.
 	cards.append(card)
 	field_list[pos.y][pos.x].set_card(card)
@@ -133,7 +125,7 @@ func move_card_to(card : CardField, pos : Vector2i) -> void:
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", field_list[pos.y][pos.x].global_position, 0.225).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-func attack_card_at(card: CardField, pos : Vector2i) -> void:
+func attack_card_at(card : CardField, pos : Vector2i) -> void:
 	var attacked_card : CardField = field_list[pos.y][pos.x].get_card()
 	attacked_card.damage(card.attack)
 	card.damage(attacked_card.attack)
