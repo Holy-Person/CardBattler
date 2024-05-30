@@ -9,7 +9,10 @@ class_name Field
 ## The fields sorted as [pos.y][pos.x]
 var field_list : Array[Array]
 ## Contains all currently active cards, used to iterate over them.
-var cards : Array
+var cards : Array :
+	get:
+		cards = cards.filter(func(card): return is_instance_valid(card))
+		return cards
 
 ## A panel on the field, used for interactions and visuals.
 var field_panel = load("res://components/field_panel.tscn")
@@ -76,10 +79,12 @@ func field_click(pos : Vector2i) -> void:
 			select_card(selected_field.get_card())
 		FieldPanel.PanelType.MOVE:
 			if !selected_card: return
+			selected_card.has_moved = true
 			move_card_to(selected_card, pos)
 			select_card(null)
 		FieldPanel.PanelType.ATTACK:
 			if !selected_card: return
+			selected_card.has_attacked = true
 			attack_card_at(selected_card, pos)
 			select_card(null)
 
@@ -91,15 +96,19 @@ func select_card(card : CardField) -> void:
 	if !card: return
 	highlight_from_card(card)
 
-
+func new_turn() -> void:
+	selected_card = null
+	for card in cards:
+		card.has_moved = false
+		card.has_attacked = false
 
 func highlight_from_card(card : CardField) -> void:
 	for i in field_size * field_size:
 		@warning_ignore("integer_division")
 		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
-		if abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.movement_range && !field_list[pos.y][pos.x].has_card():
+		if abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.movement_range && !field_list[pos.y][pos.x].has_card() && !card.has_moved && !card.has_attacked:
 			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.MOVE)
-		elif abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.attack_range && field_list[pos.y][pos.x].has_card():
+		elif abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.attack_range && field_list[pos.y][pos.x].has_card() && !card.has_attacked:
 			if field_list[pos.y][pos.x].get_card() == card: continue
 			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.ATTACK)
 
@@ -127,9 +136,11 @@ func move_card_to(card : CardField, pos : Vector2i) -> void:
 
 func attack_card_at(card : CardField, pos : Vector2i) -> void:
 	var attacked_card : CardField = field_list[pos.y][pos.x].get_card()
+	var tween = get_tree().create_tween()
+	tween.tween_property(card, "global_position", field_list[pos.y][pos.x].global_position, 0.125).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	await tween.finished
 	attacked_card.damage(card.attack)
 	card.damage(attacked_card.attack)
-	var tween = get_tree().create_tween().set_parallel(false)
-	tween.tween_property(card, "global_position", field_list[pos.y][pos.x].global_position, 0.125).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+	if card.is_queued_for_deletion(): return
+	tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", field_list[card.pos.y][card.pos.x].global_position, 0.1).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	# Deal damage during tween, lock interactions until done.

@@ -58,3 +58,10 @@ func damage(value : int) -> void:
 
 func die() -> void:
 	queue_free()
+
+func _physics_process(delta: float) -> void:
+	self_modulate = Color(0.65, 0.65, 0.65) if has_attacked else Color.WHITE
+	$Image.self_modulate = self_modulate
+	$Control/ColorRect.visible = false if has_moved || has_attacked else true
+	if $Control/ColorRect.position.y < -250: $Control/ColorRect.position.y = 125
+	$Control/ColorRect.position.y -= delta * 350
