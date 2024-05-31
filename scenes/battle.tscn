@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bglfjofq8iamc"]
+[gd_scene load_steps=5 format=3 uid="uid://bglfjofq8iamc"]
 
 [ext_resource type="Script" path="res://scenes/field.gd" id="1_2ewh4"]
 [ext_resource type="Theme" uid="uid://dnfydxh5ba4ld" path="res://resources/theme_field.tres" id="1_o141i"]
+[ext_resource type="Script" path="res://components/hand.gd" id="3_mdbgi"]
+[ext_resource type="PackedScene" uid="uid://fd77svwn3vr5" path="res://components/card_hand.tscn" id="4_teh3c"]
 
 [node name="battle" type="Node"]
 
@@ -44,5 +46,60 @@ offset_top = -8.0
 offset_right = 8.0
 grow_vertical = 0
 text = "Next Turn"
+
+[node name="Hand" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+script = ExtResource("3_mdbgi")
+
+[node name="Panel" type="Panel" parent="Hand"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -131.275
+offset_right = 20.0
+offset_bottom = -91.275
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardRoot" type="Control" parent="Hand"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="CardHand" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand2" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand3" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand4" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand5" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand6" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
+
+[node name="CardHand7" parent="Hand/CardRoot" instance=ExtResource("4_teh3c")]
+layout_mode = 1
 
 [connection signal="pressed" from="Button" to="Field" method="new_turn"]

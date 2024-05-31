@@ -7,7 +7,7 @@ class_name FieldPanel
 @onready var button : Button = $Button
 @onready var highlight : Highlight = $Highlight
 
-var card : CardField
+var card : CardActive
 
 enum PanelType {
 	NONE,
@@ -20,10 +20,10 @@ func has_card() -> bool:
 	if is_instance_valid(card): return true
 	return false
 
-func get_card() -> CardField:
+func get_card() -> CardActive:
 	return card
 
-func set_card(new_card : CardField) -> void:
+func set_card(new_card : CardActive) -> void:
 	card = new_card
 
 

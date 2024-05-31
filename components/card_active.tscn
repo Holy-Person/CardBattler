@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://cyvgx5jmfw5ip"]
+
+[ext_resource type="Script" path="res://card_active.gd" id="1_ah8j5"]
+[ext_resource type="PackedScene" uid="uid://bvynj1e32wykt" path="res://components/card_visual.tscn" id="2_upcmw"]
+
+[node name="CardActive" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ah8j5")
+
+[node name="CardVisual" parent="." instance=ExtResource("2_upcmw")]
+layout_mode = 0

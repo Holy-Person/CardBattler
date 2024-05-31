@@ -17,10 +17,10 @@ var cards : Array :
 ## A panel on the field, used for interactions and visuals.
 var field_panel = load("res://components/field_panel.tscn")
 ## A card on the field.
-var card_field = load("res://components/card_field.tscn")
+var card_active = load("res://components/card_active.tscn")
 
 ## The currently selected card, used with InteractionType.CARD to control the card.
-var selected_card : CardField
+var selected_card : CardActive
 
 
 
@@ -48,22 +48,22 @@ func test() -> void:
 	card_test.image = load("res://Cylinder.png")
 	card_test.health_points = 1
 	card_test.attack_points = 1
-	var card_active : CardField = card_field.instantiate()
-	card_active.card_base = card_test
-	card_active.owner_id = 1
-	$"../Cards".add_child(card_active)
-	set_card_to(card_active, Vector2i(1,2))
+	var card_to_place : CardActive = card_active.instantiate()
+	card_to_place.card_base = card_test
+	card_to_place.owner_id = 1
+	$"../Cards".add_child(card_to_place)
+	set_card_to(card_to_place, Vector2i(1,2))
 
 	card_test = CardBase.new()
 	card_test.name = "Torus"
 	card_test.image = load("res://Torus.png")
 	card_test.health_points = 2
 	card_test.attack_points = 0
-	card_active = card_field.instantiate()
-	card_active.card_base = card_test
-	card_active.owner_id = 2
-	$"../Cards".add_child(card_active)
-	set_card_to(card_active, Vector2i(2,1))
+	card_to_place = card_active.instantiate()
+	card_to_place.card_base = card_test
+	card_to_place.owner_id = 2
+	$"../Cards".add_child(card_to_place)
+	set_card_to(card_to_place, Vector2i(2,1))
 
 
 
@@ -90,7 +90,7 @@ func field_click(pos : Vector2i) -> void:
 
 
 
-func select_card(card : CardField) -> void:
+func select_card(card : CardActive) -> void:
 	clear_highlights()
 	selected_card = card
 	if !card: return
@@ -102,7 +102,7 @@ func new_turn() -> void:
 		card.has_moved = false
 		card.has_attacked = false
 
-func highlight_from_card(card : CardField) -> void:
+func highlight_from_card(card : CardActive) -> void:
 	for i in field_size * field_size:
 		@warning_ignore("integer_division")
 		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
@@ -120,22 +120,22 @@ func clear_highlights() -> void:
 
 
 
-func set_card_to(card : CardField, pos : Vector2i) -> void:
+func set_card_to(card : CardActive, pos : Vector2i) -> void:
 	#card.owner_id = multiplayer.get_remote_sender_id() # No multiplayer yet.
 	cards.append(card)
 	field_list[pos.y][pos.x].set_card(card)
 	card.pos = pos
 	card.global_position = field_list[pos.y][pos.x].global_position
 
-func move_card_to(card : CardField, pos : Vector2i) -> void:
+func move_card_to(card : CardActive, pos : Vector2i) -> void:
 	if card.pos != null: field_list[card.pos.y][card.pos.x].set_card(null)
 	field_list[pos.y][pos.x].set_card(card)
 	card.pos = pos
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", field_list[pos.y][pos.x].global_position, 0.225).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 
-func attack_card_at(card : CardField, pos : Vector2i) -> void:
-	var attacked_card : CardField = field_list[pos.y][pos.x].get_card()
+func attack_card_at(card : CardActive, pos : Vector2i) -> void:
+	var attacked_card : CardActive = field_list[pos.y][pos.x].get_card()
 	var tween = get_tree().create_tween()
 	tween.tween_property(card, "global_position", field_list[pos.y][pos.x].global_position, 0.125).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	await tween.finished

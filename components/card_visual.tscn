@@ -1,14 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://bvynj1e32wykt"]
 
-[ext_resource type="Script" path="res://components/card_field.gd" id="1_4h2s4"]
-[ext_resource type="Theme" uid="uid://bxxtgxrvvfsng" path="res://resources/theme_card.tres" id="1_wfwno"]
+[ext_resource type="Theme" uid="uid://bxxtgxrvvfsng" path="res://resources/theme_card.tres" id="1_wq7u4"]
+[ext_resource type="Script" path="res://components/card_visual.gd" id="2_krtxo"]
 
-[node name="CardField" type="Panel"]
+[node name="CardVisual" type="Panel"]
 offset_right = 100.0
 offset_bottom = 125.0
 mouse_filter = 2
-theme = ExtResource("1_wfwno")
-script = ExtResource("1_4h2s4")
+theme = ExtResource("1_wq7u4")
+script = ExtResource("2_krtxo")
 
 [node name="Image" type="TextureRect" parent="."]
 layout_mode = 1
@@ -117,6 +117,30 @@ mouse_filter = 2
 color = Color(0.0470588, 0.133333, 1, 1)
 
 [node name="Label" type="Label" parent="AP"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Cost" type="ColorRect" parent="."]
+custom_minimum_size = Vector2(25, 25)
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 20.0
+grow_horizontal = 0
+color = Color(0.313726, 0.807843, 1, 1)
+
+[node name="Label" type="Label" parent="Cost"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
