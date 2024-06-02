@@ -1,0 +1,16 @@
+{
+	"cyl": {
+		"name": "Cylinder",
+		"image": "res://Cylinder.png",
+		"health_points": 2,
+		"attack_points": 0,
+		"cost": 1
+	},
+	"tor": {
+		"name": "Torus",
+		"image": "res://Torus.png",
+		"health_points": 1,
+		"attack_points": 1,
+		"cost": 1
+	}
+}

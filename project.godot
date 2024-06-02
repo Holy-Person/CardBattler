@@ -15,6 +15,10 @@ run/main_scene="res://scenes/battle.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+CardBuilder="*res://core/cardbuilder.gd"
+
 [display]
 
 window/size/always_on_top.editor=true

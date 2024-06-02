@@ -43,22 +43,14 @@ func _ready() -> void:
 
 ## Temporary function for testing.
 func test() -> void:
-	var card_test : CardBase = CardBase.new()
-	card_test.name = "Cylinder"
-	card_test.image = load("res://Cylinder.png")
-	card_test.health_points = 1
-	card_test.attack_points = 1
+	var card_test : CardBase = CardBuilder.get_card("cyl")
 	var card_to_place : CardActive = card_active.instantiate()
 	card_to_place.card_base = card_test
 	card_to_place.owner_id = 1
 	$"../Cards".add_child(card_to_place)
 	set_card_to(card_to_place, Vector2i(1,2))
 
-	card_test = CardBase.new()
-	card_test.name = "Torus"
-	card_test.image = load("res://Torus.png")
-	card_test.health_points = 2
-	card_test.attack_points = 0
+	card_test = CardBuilder.get_card("tor")
 	card_to_place = card_active.instantiate()
 	card_to_place.card_base = card_test
 	card_to_place.owner_id = 2
