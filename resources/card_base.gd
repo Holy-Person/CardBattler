@@ -6,6 +6,7 @@ class_name CardBase
 
 @export var name : String
 @export var image : Texture
-@export var health_points : int
-@export var attack_points : int
-@export var cost : int
+@export var tint : Color = Color.WHITE
+@export var health_points : int = 0
+@export var attack_points : int = 0
+@export var cost : int = 0

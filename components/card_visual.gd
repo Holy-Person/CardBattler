@@ -24,6 +24,7 @@ func set_card_base(base : CardBase) -> void:
 func update_initial() -> void:
 	$Name.text = card_base.name
 	image.texture = card_base.image
+	image.self_modulate = card_base.tint
 	cost.text = str(card_base.cost)
 	owner_indicator.color = Color(0, 0.73, 0.89, 1) if get_parent().owner_id == 1 else Color(0.78, 0, 0.31, 1)
 
@@ -59,7 +60,7 @@ func _physics_process(delta: float) -> void:
 	if !get_parent() is CardActive: return
 	var card : CardActive = get_parent()
 	self_modulate = Color(0.65, 0.65, 0.65) if card.has_attacked else Color.WHITE
-	image.self_modulate = self_modulate
+	image.self_modulate = self_modulate if card.has_attacked else card_base.tint
 	shimmer.visible = false if card.has_moved || card.has_attacked else true
 	if shimmer.position.y < -250: shimmer.position.y = 125
 	shimmer.position.y -= delta * 350

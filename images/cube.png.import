@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d22r8r1a46i2q"
-path="res://.godot/imported/Torus.png-39a043190d5d87dfa770535ce0abe8c3.ctex"
+uid="uid://dr3u4rdgn4ua"
+path="res://.godot/imported/cube.png-edec6811ff0bc12b1cb4837cbcc449ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Torus.png"
-dest_files=["res://.godot/imported/Torus.png-39a043190d5d87dfa770535ce0abe8c3.ctex"]
+source_file="res://images/cube.png"
+dest_files=["res://.godot/imported/cube.png-edec6811ff0bc12b1cb4837cbcc449ca.ctex"]
 
 [params]
 

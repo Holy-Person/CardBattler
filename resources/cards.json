@@ -1,16 +1,49 @@
 {
-	"cyl": {
+	"cylinder": {
 		"name": "Cylinder",
-		"image": "res://Cylinder.png",
-		"health_points": 2,
-		"attack_points": 0,
+		"tint": "#ca3ded",
+		"health_points": 3,
 		"cost": 1
 	},
-	"tor": {
+	"torus": {
 		"name": "Torus",
-		"image": "res://Torus.png",
-		"health_points": 1,
+		"tint": "#ed923d",
+		"health_points": 2,
 		"attack_points": 1,
 		"cost": 1
+	},
+	"suzanne": {
+		"name": "Suzanne",
+		"tint": "#fcf350",
+		"health_points": 20,
+		"effect": "king"
+	},
+	"cone": {
+		"name": "Cone",
+		"tint": "#d84949",
+		"health_points": 1,
+		"attack_points": 3,
+		"cost": 2
+	},
+	"sphere": {
+		"name": "Sphere",
+		"tint": "#9149d8",
+		"health_points": 2,
+		"attack_points": 2,
+		"cost": 1
+	},
+	"icosphere": {
+		"name": "Ico Sphere",
+		"tint": "#49d874",
+		"health_points": 1,
+		"attack_points": 2,
+		"cost": 2
+	},
+	"cube": {
+		"name": "Cube",
+		"tint": "#3f55fc",
+		"health_points": 3,
+		"attack_points": 1,
+		"cost": 2
 	}
 }

@@ -43,19 +43,33 @@ func _ready() -> void:
 
 ## Temporary function for testing.
 func test() -> void:
-	var card_test : CardBase = CardBuilder.get_card("cyl")
+	var card_test : CardBase = CardBuilder.get_card("cone")
 	var card_to_place : CardActive = card_active.instantiate()
 	card_to_place.card_base = card_test
 	card_to_place.owner_id = 1
 	$"../Cards".add_child(card_to_place)
 	set_card_to(card_to_place, Vector2i(1,2))
 
-	card_test = CardBuilder.get_card("tor")
+	card_test = CardBuilder.get_card("cube")
 	card_to_place = card_active.instantiate()
 	card_to_place.card_base = card_test
 	card_to_place.owner_id = 2
 	$"../Cards".add_child(card_to_place)
 	set_card_to(card_to_place, Vector2i(2,1))
+
+	card_test = CardBuilder.get_card("suzanne")
+	card_to_place = card_active.instantiate()
+	card_to_place.card_base = card_test
+	card_to_place.owner_id = 1
+	$"../Cards".add_child(card_to_place)
+	set_card_to(card_to_place, Vector2i(0,1))
+
+	card_test = CardBuilder.get_card("suzanne")
+	card_to_place = card_active.instantiate()
+	card_to_place.card_base = card_test
+	card_to_place.owner_id = 2
+	$"../Cards".add_child(card_to_place)
+	set_card_to(card_to_place, Vector2i(3,1))
 
 
 
