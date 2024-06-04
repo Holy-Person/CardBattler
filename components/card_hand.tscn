@@ -17,8 +17,11 @@ offset_right = 50.0
 offset_bottom = 62.5
 grow_horizontal = 2
 grow_vertical = 2
-pivot_offset = Vector2(50, 250)
+pivot_offset = Vector2(50, 125)
 script = ExtResource("1_rsy11")
 
 [node name="CardVisual" parent="." instance=ExtResource("2_4ayqm")]
 layout_mode = 0
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

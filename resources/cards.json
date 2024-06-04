@@ -16,7 +16,7 @@
 		"name": "Suzanne",
 		"tint": "#fcf350",
 		"health_points": 20,
-		"effect": "king"
+		"type": "king"
 	},
 	"cone": {
 		"name": "Cone",

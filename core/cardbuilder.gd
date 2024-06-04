@@ -11,17 +11,31 @@ func _ready() -> void:
 
 
 
-func get_random_card() -> CardBase:
-	var index = randi() % card_data.size()
-	return get_card_from_id(card_data.keys()[index])
+func get_random_card(type : String = '') -> CardBase:
+	var pickable_data : Dictionary = card_data.duplicate()
+	match type:
+		"king":
+			for data in pickable_data.keys():
+				if !pickable_data[data].has("type"):
+					pickable_data.erase(data)
+					continue
+				if pickable_data[data].type != "king":
+					pickable_data.erase(data)
+		_:
+			for data in pickable_data.keys():
+				if pickable_data[data].has("type"):
+					pickable_data.erase(data)
+	if pickable_data.is_empty(): return
+	var index = randi() % pickable_data.size()
+	return _get_card_from_id(pickable_data.keys()[index])
 
 func get_card(id : String) -> CardBase:
-	if card_data.has(id): return get_card_from_id(id)
+	if card_data.has(id): return _get_card_from_id(id)
 	return null
 
 
 
-func get_card_from_id(id : String) -> CardBase:
+func _get_card_from_id(id : String) -> CardBase:
 	var card_base = CardBase.new()
 	var data : Dictionary = card_data[id]
 	for field in data:
