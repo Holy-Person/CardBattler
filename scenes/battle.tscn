@@ -1,8 +1,9 @@
-[gd_scene load_steps=4 format=3 uid="uid://bglfjofq8iamc"]
+[gd_scene load_steps=5 format=3 uid="uid://bglfjofq8iamc"]
 
 [ext_resource type="Script" path="res://scenes/field.gd" id="1_2ewh4"]
 [ext_resource type="Theme" uid="uid://dnfydxh5ba4ld" path="res://resources/theme_field.tres" id="1_o141i"]
 [ext_resource type="Script" path="res://components/hand.gd" id="3_mdbgi"]
+[ext_resource type="Texture2D" uid="uid://dnrspfuhff34y" path="res://images/inner_cost.png" id="4_oyuuc"]
 
 [node name="battle" type="Node"]
 
@@ -37,34 +38,139 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Button" type="Button" parent="."]
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_top = -8.0
-offset_right = 8.0
-grow_vertical = 0
-text = "Next Turn"
-
-[node name="Hand" type="Control" parent="."]
-layout_mode = 3
+[node name="UserUI" type="PanelContainer" parent="."]
 anchors_preset = 12
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
+
+[node name="Button" type="Button" parent="UserUI"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Next Turn"
+
+[node name="ManaInfo" type="PanelContainer" parent="UserUI"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserUI/ManaInfo"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 2
+
+[node name="Label" type="Label" parent="UserUI/ManaInfo/HBoxContainer"]
+layout_mode = 2
+text = "10/10"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect2" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect3" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect4" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect5" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect6" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect7" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect8" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect9" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="TextureRect10" type="TextureRect" parent="UserUI/ManaInfo/HBoxContainer"]
+custom_minimum_size = Vector2(15, 15)
+layout_mode = 2
+texture = ExtResource("4_oyuuc")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Hand" type="CenterContainer" parent="UserUI"]
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 2
+mouse_filter = 2
 script = ExtResource("3_mdbgi")
 
-[node name="CardRoot" type="Control" parent="Hand"]
-layout_mode = 1
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
+[node name="CardRoot" type="Control" parent="UserUI/Hand"]
+layout_mode = 2
 mouse_filter = 2
 
-[connection signal="pressed" from="Button" to="Field" method="new_turn"]
+[node name="DrawPilePlaceholder" type="Panel" parent="UserUI"]
+custom_minimum_size = Vector2(100, 125)
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+
+[node name="Label" type="Label" parent="UserUI/DrawPilePlaceholder"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -11.1667
+offset_right = 20.0
+offset_bottom = 11.1667
+grow_horizontal = 2
+grow_vertical = 2
+text = "17 Cards"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[connection signal="pressed" from="UserUI/Button" to="Field" method="new_turn"]

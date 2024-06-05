@@ -1,4 +1,4 @@
-extends Control
+extends CenterContainer
 
 class_name Hand
 
@@ -7,7 +7,6 @@ class_name Hand
 @onready var card_root : Control = $CardRoot
 
 var deck : Array[CardBase]
-var hand : Array[CardHand]
 
 var card_hand = load("res://components/card_hand.tscn")
 
@@ -33,13 +32,11 @@ func draw_card() -> void:
 	card_root.add_child(card)
 	update_hand_visual()
 
-func place_card_on_field(card : CardActive) -> void:
-	hand.erase(card)
-	pass
+#func place_card_on_field(card : CardActive) -> void:
+#	hand.erase(card)
 
 func update_hand_visual() -> void:
 	for child in card_root.get_children():
 		# The math for this is terrible and doesn't work well with even numbers, going to have to improve this some other time, I am tired.
 		child.position.x = ( child.get_index() - float(card_root.get_child_count()) / 2 ) * 250 / card_root.get_child_count()
 		child.rotation_degrees = ( child.get_index() - float(card_root.get_child_count()) / 2 ) * 15 / card_root.get_child_count()
-	card_root.position.y -= 25
