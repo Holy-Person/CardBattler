@@ -13,7 +13,8 @@ enum PanelType {
 	NONE,
 	CARD,
 	MOVE,
-	ATTACK
+	ATTACK,
+	DEPLOY
 }
 
 func has_card() -> bool:
@@ -29,6 +30,8 @@ func set_card(new_card : CardActive) -> void:
 
 
 func get_type() -> PanelType:
+	if highlight.type == Highlight.HighlightType.DEPLOY:
+		return PanelType.DEPLOY
 	if highlight.type == Highlight.HighlightType.MOVE:
 		return PanelType.MOVE
 	elif highlight.type == Highlight.HighlightType.ATTACK:

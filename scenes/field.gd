@@ -93,6 +93,11 @@ func field_click(pos : Vector2i) -> void:
 			selected_card.has_attacked = true
 			attack_card_at(selected_card, pos)
 			select_card(null)
+		FieldPanel.PanelType.DEPLOY:
+			# Might need to migrate the paneltype into a fieldtype/paneltype system next time.
+			# - Otherwise cards can still be selected while deploying a card.
+			# - Other solution could be to make selecting a card clear any focus in the hand as well.
+			pass
 
 
 
@@ -107,6 +112,20 @@ func new_turn() -> void:
 	for card in cards:
 		card.has_moved = false
 		card.has_attacked = false
+
+
+
+func highlight_from_hand(id : String) -> void:
+	for i in field_size * field_size:
+		@warning_ignore("integer_division")
+		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
+		var card_base : CardBase = CardBuilder.get_card(id)
+		match card_base.type:
+			"king":
+				if field_list[pos.y][pos.x].has_card(): continue
+				field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.DEPLOY)
+
+
 
 func highlight_from_card(card : CardActive) -> void:
 	for i in field_size * field_size:

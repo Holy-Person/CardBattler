@@ -7,7 +7,8 @@ class_name Highlight
 enum HighlightType {
 	NONE,
 	MOVE,
-	ATTACK
+	ATTACK,
+	DEPLOY
 }
 
 var type : int = 0 :
@@ -16,7 +17,7 @@ var type : int = 0 :
 		match val:
 			HighlightType.NONE:
 				hide()
-			HighlightType.MOVE:
+			HighlightType.MOVE, HighlightType.DEPLOY:
 				modulate = Color.CYAN
 				show()
 			HighlightType.ATTACK:

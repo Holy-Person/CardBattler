@@ -37,6 +37,7 @@ func get_card(id : String) -> CardBase:
 
 func _get_card_from_id(id : String) -> CardBase:
 	var card_base = CardBase.new()
+	card_base.id = id
 	var data : Dictionary = card_data[id]
 	for field in data:
 		match field:
