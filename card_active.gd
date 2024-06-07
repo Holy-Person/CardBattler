@@ -44,3 +44,11 @@ func damage(value : int) -> void:
 
 func die() -> void:
 	queue_free()
+
+
+
+func can_move() -> bool:
+	return !has_moved && !has_attacked
+
+func can_attack() -> bool:
+	return !has_attacked

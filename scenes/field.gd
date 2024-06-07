@@ -22,6 +22,8 @@ var card_active = load("res://components/card_active.tscn")
 ## The currently selected card, used with InteractionType.CARD to control the card.
 var selected_card : CardActive
 
+signal field_clicked(pos : Vector2i)
+
 
 
 func _ready() -> void:
@@ -36,82 +38,10 @@ func _ready() -> void:
 		panel.button.pressed.connect(field_click.bind(pos))
 		field_list[pos.y].append(panel)
 
-	# Add some test cards.
-	test.call_deferred()
-
-
-
-## Temporary function for testing.
-func test() -> void:
-	var card_test : CardBase = CardBuilder.get_card("cone")
-	var card_to_place : CardActive = card_active.instantiate()
-	card_to_place.card_base = card_test
-	card_to_place.owner_id = 1
-	$"../Cards".add_child(card_to_place)
-	set_card_to(card_to_place, Vector2i(1,2))
-
-	card_test = CardBuilder.get_card("cube")
-	card_to_place = card_active.instantiate()
-	card_to_place.card_base = card_test
-	card_to_place.owner_id = 2
-	$"../Cards".add_child(card_to_place)
-	set_card_to(card_to_place, Vector2i(2,1))
-
-	card_test = CardBuilder.get_card("suzanne")
-	card_to_place = card_active.instantiate()
-	card_to_place.card_base = card_test
-	card_to_place.owner_id = 1
-	$"../Cards".add_child(card_to_place)
-	set_card_to(card_to_place, Vector2i(0,1))
-
-	card_test = CardBuilder.get_card("suzanne")
-	card_to_place = card_active.instantiate()
-	card_to_place.card_base = card_test
-	card_to_place.owner_id = 2
-	$"../Cards".add_child(card_to_place)
-	set_card_to(card_to_place, Vector2i(3,1))
-
 
 
 func field_click(pos : Vector2i) -> void:
-	var selected_field : FieldPanel = field_list[pos.y][pos.x]
-
-	match selected_field.get_type():
-		FieldPanel.PanelType.CARD:
-			# Check if card is your own here.
-			if selected_card == selected_field.get_card():
-				select_card(null)
-				return
-			select_card(selected_field.get_card())
-		FieldPanel.PanelType.MOVE:
-			if !selected_card: return
-			selected_card.has_moved = true
-			move_card_to(selected_card, pos)
-			select_card(null)
-		FieldPanel.PanelType.ATTACK:
-			if !selected_card: return
-			selected_card.has_attacked = true
-			attack_card_at(selected_card, pos)
-			select_card(null)
-		FieldPanel.PanelType.DEPLOY:
-			# Might need to migrate the paneltype into a fieldtype/paneltype system next time.
-			# - Otherwise cards can still be selected while deploying a card.
-			# - Other solution could be to make selecting a card clear any focus in the hand as well.
-			pass
-
-
-
-func select_card(card : CardActive) -> void:
-	clear_highlights()
-	selected_card = card
-	if !card: return
-	highlight_from_card(card)
-
-func new_turn() -> void:
-	selected_card = null
-	for card in cards:
-		card.has_moved = false
-		card.has_attacked = false
+	field_clicked.emit(pos)
 
 
 
@@ -124,18 +54,24 @@ func highlight_from_hand(id : String) -> void:
 			"king":
 				if field_list[pos.y][pos.x].has_card(): continue
 				field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.DEPLOY)
+			_:
+				# In a radius around the king.
+				pass
 
 
 
-func highlight_from_card(card : CardActive) -> void:
+func highlight_from_position(pos : Vector2i) -> void:
+	if !field_list[pos.y][pos.x].has_card(): return
+	var card : CardActive = field_list[pos.y][pos.x].get_card()
 	for i in field_size * field_size:
 		@warning_ignore("integer_division")
-		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
-		if abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.movement_range && !field_list[pos.y][pos.x].has_card() && !card.has_moved && !card.has_attacked:
-			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.MOVE)
-		elif abs(pos - card.pos).x + abs(pos - card.pos).y  <= card.attack_range && field_list[pos.y][pos.x].has_card() && !card.has_attacked:
-			if field_list[pos.y][pos.x].get_card() == card: continue
-			field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.ATTACK)
+		var loop_pos : Vector2i = Vector2i( i % field_size, i / field_size )
+		var loop_panel : FieldPanel = field_list[loop_pos.y][loop_pos.x]
+		if abs(loop_pos - pos).x + abs(loop_pos - pos).y  <= card.movement_range && !loop_panel.has_card() && card.can_move():
+			loop_panel.set_highlight(Highlight.HighlightType.MOVE)
+		elif abs(loop_pos - pos).x + abs(loop_pos - pos).y  <= card.attack_range && loop_panel.has_card() && card.can_attack():
+			if loop_panel.get_card() == card: continue
+			loop_panel.set_highlight(Highlight.HighlightType.ATTACK)
 
 func clear_highlights() -> void:
 	for i in field_size * field_size:

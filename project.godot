@@ -13,6 +13,7 @@ config_version=5
 config/name="CardBattler"
 run/main_scene="res://scenes/battle.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
+boot_splash/bg_color=Color(0.309804, 0.34902, 0.745098, 1)
 config/icon="res://icon.svg"
 
 [autoload]
@@ -23,6 +24,7 @@ CardBuilder="*res://core/cardbuilder.gd"
 
 window/size/viewport_width=648
 window/size/viewport_height=1152
+window/handheld/orientation=5
 window/size/always_on_top.editor=true
 
 [gui]

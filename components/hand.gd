@@ -4,7 +4,6 @@ class_name Hand
 
 
 
-@onready var field : Field = $"../../Field"
 @onready var card_root : Control = $CardRoot
 
 var deck : Array[CardBase]
@@ -44,10 +43,9 @@ func draw_card() -> void:
 
 func select_card(state : bool, card : CardHand) -> void:
 	if !state:
-		field.clear_highlights()
+		get_tree().current_scene.field.clear_highlights()
 		return
-
-	field.highlight_from_hand(card.card_base.id)
+	get_tree().current_scene.field.highlight_from_hand(card.card_base.id)
 
 func update_hand_visual() -> void:
 	for child in card_root.get_children():

@@ -19,7 +19,7 @@ func get_random_card(type : String = '') -> CardBase:
 				if !pickable_data[data].has("type"):
 					pickable_data.erase(data)
 					continue
-				if pickable_data[data].type != "king":
+				if pickable_data[data].type != type:
 					pickable_data.erase(data)
 		_:
 			for data in pickable_data.keys():
