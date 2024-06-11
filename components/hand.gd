@@ -11,6 +11,9 @@ var deck : Array[CardBase]
 var card_hand = load("res://components/card_hand.tscn")
 var card_group : ButtonGroup = ButtonGroup.new()
 
+signal card_selected(card : CardHand)
+
+
 
 func _ready() -> void:
 	card_group.set_allow_unpress(true)
@@ -43,9 +46,9 @@ func draw_card() -> void:
 
 func select_card(state : bool, card : CardHand) -> void:
 	if !state:
-		get_tree().current_scene.field.clear_highlights()
+		card_selected.emit(null)
 		return
-	get_tree().current_scene.field.highlight_from_hand(card.card_base.id)
+	card_selected.emit(card)
 
 func update_hand_visual() -> void:
 	for child in card_root.get_children():

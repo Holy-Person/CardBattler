@@ -70,7 +70,7 @@ func highlight_from_position(pos : Vector2i) -> void:
 		if abs(loop_pos - pos).x + abs(loop_pos - pos).y  <= card.movement_range && !loop_panel.has_card() && card.can_move():
 			loop_panel.set_highlight(Highlight.HighlightType.MOVE)
 		elif abs(loop_pos - pos).x + abs(loop_pos - pos).y  <= card.attack_range && loop_panel.has_card() && card.can_attack():
-			if loop_panel.get_card() == card: continue
+			if loop_pos == pos: continue
 			loop_panel.set_highlight(Highlight.HighlightType.ATTACK)
 
 func clear_highlights() -> void:

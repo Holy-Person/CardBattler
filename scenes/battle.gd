@@ -8,6 +8,7 @@ class_name Battle
 ## TODO: Make it resize better, centercontainers only allow minimum size.
 @onready var center_field : CenterContainer = %CenterField
 @onready var card_root : Control = %Cards
+@onready var hand : Hand = $InteractiveRegion/UserUI/Hand
 
 var field : Field
 
@@ -61,3 +62,7 @@ func on_field_clicked(pos : Vector2i) -> void:
 			# - Other solution could be to make selecting a card clear any focus in the hand as well.
 
 			pass
+
+
+func _on_hand_card_selected(card) -> void:
+	pass # Replace with function body.

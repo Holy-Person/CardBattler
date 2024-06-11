@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bglfjofq8iamc"]
+[gd_scene load_steps=9 format=3 uid="uid://bglfjofq8iamc"]
 
 [ext_resource type="Script" path="res://scenes/battle.gd" id="1_afft4"]
 [ext_resource type="Theme" uid="uid://dnfydxh5ba4ld" path="res://resources/theme_field.tres" id="1_o141i"]
 [ext_resource type="Theme" uid="uid://c8q2ba25ph35m" path="res://resources/theme_battle.tres" id="2_8xdqn"]
 [ext_resource type="Script" path="res://components/hand.gd" id="3_mdbgi"]
+[ext_resource type="Script" path="res://scenes/mana_bar.gd" id="4_4fliq"]
 [ext_resource type="Texture2D" uid="uid://dnrspfuhff34y" path="res://images/inner_cost.png" id="4_oyuuc"]
 
 [sub_resource type="Gradient" id="Gradient_kgw5l"]
@@ -89,83 +90,89 @@ text = "Next Turn"
 layout_mode = 2
 size_flags_horizontal = 8
 size_flags_vertical = 0
+script = ExtResource("4_4fliq")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="InteractiveRegion/UserUI/ManaInfo"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="InteractiveRegion/UserUI/ManaInfo"]
 layout_mode = 2
-size_flags_horizontal = 4
-size_flags_vertical = 4
-alignment = 2
 
-[node name="Label" type="Label" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="ManaLabel" type="Label" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "10/10"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="TextureRect" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="ManaBar" type="HBoxContainer" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect2" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect2" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect3" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect3" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect4" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect4" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect5" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect5" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect6" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect6" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect7" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect7" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect8" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect8" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect9" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect9" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextureRect10" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer"]
+[node name="TextureRect10" type="TextureRect" parent="InteractiveRegion/UserUI/ManaInfo/HBoxContainer2/ManaBar"]
 custom_minimum_size = Vector2(15, 15)
 layout_mode = 2
 texture = ExtResource("4_oyuuc")
@@ -205,3 +212,5 @@ text = "17 Cards"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
+
+[connection signal="card_selected" from="InteractiveRegion/UserUI/Hand" to="." method="_on_hand_card_selected"]
