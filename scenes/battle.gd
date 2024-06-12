@@ -6,7 +6,7 @@ class_name Battle
 
 ## Container for the field and all cards on it.
 ## TODO: Make it resize better, centercontainers only allow minimum size.
-@onready var center_field : CenterContainer = %CenterField
+@onready var center_field : AspectRatioContainer = %CenterField
 @onready var card_root : Control = %Cards
 @onready var hand : Hand = $InteractiveRegion/UserUI/Hand
 
@@ -19,6 +19,8 @@ var selected_card
 
 
 func _ready() -> void:
+	# Temporary, set minimum size of window, current approximate to remain interactable.
+	DisplayServer.window_set_min_size(Vector2i(340, 620))
 	field = Field.new()
 	center_field.add_child(field)
 
@@ -34,7 +36,7 @@ func select_card(card : CardActive) -> void:
 	field.clear_highlights()
 	selected_card = card
 	if !card: return
-	field.highlight_from_card(card)
+	field.highlight_from_position(card.pos)
 
 func on_field_clicked(pos : Vector2i) -> void:
 	var selected_field : FieldPanel = field.field_list[pos.y][pos.x]

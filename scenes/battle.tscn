@@ -66,11 +66,12 @@ layout_mode = 2
 size_flags_horizontal = 8
 text = "Options"
 
-[node name="CenterField" type="CenterContainer" parent="InteractiveRegion"]
+[node name="CenterField" type="AspectRatioContainer" parent="InteractiveRegion"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_vertical = 3
 theme = ExtResource("1_o141i")
+ratio = 0.8
 
 [node name="Cards" type="Control" parent="InteractiveRegion/CenterField"]
 unique_name_in_owner = true
@@ -79,6 +80,8 @@ mouse_filter = 2
 
 [node name="UserUI" type="PanelContainer" parent="InteractiveRegion"]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.2
 
 [node name="Button" type="Button" parent="InteractiveRegion/UserUI"]
 layout_mode = 2
@@ -180,7 +183,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="Hand" type="CenterContainer" parent="InteractiveRegion/UserUI"]
-custom_minimum_size = Vector2(0, 200)
 layout_mode = 2
 mouse_filter = 2
 script = ExtResource("3_mdbgi")
@@ -190,10 +192,8 @@ layout_mode = 2
 mouse_filter = 2
 
 [node name="DrawPilePlaceholder" type="Panel" parent="InteractiveRegion/UserUI"]
-custom_minimum_size = Vector2(100, 125)
 layout_mode = 2
 size_flags_horizontal = 8
-size_flags_vertical = 8
 
 [node name="Label" type="Label" parent="InteractiveRegion/UserUI/DrawPilePlaceholder"]
 layout_mode = 1
@@ -213,4 +213,5 @@ horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
 
+[connection signal="pressed" from="InteractiveRegion/UserUI/Button" to="." method="next_turn"]
 [connection signal="card_selected" from="InteractiveRegion/UserUI/Hand" to="." method="_on_hand_card_selected"]
