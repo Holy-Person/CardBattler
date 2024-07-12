@@ -14,10 +14,10 @@ var cards : Array :
 		cards = cards.filter(func(card): return is_instance_valid(card))
 		return cards
 
+var kings : Dictionary
+
 ## A panel on the field, used for interactions and visuals.
 var field_panel = load("res://components/field_panel.tscn")
-## A card on the field.
-var card_active = load("res://components/card_active.tscn")
 
 ## The currently selected card, used with InteractionType.CARD to control the card.
 var selected_card : CardActive
@@ -46,17 +46,21 @@ func field_click(pos : Vector2i) -> void:
 
 
 func highlight_from_hand(id : String) -> void:
-	for i in field_size * field_size:
-		@warning_ignore("integer_division")
-		var pos : Vector2i = Vector2i( i % field_size, i / field_size )
-		var card_base : CardBase = CardBuilder.get_card(id)
-		match card_base.type:
-			"king":
+	var card_base : CardBase = CardBuilder.get_card(id)
+	match card_base.type:
+		"king":
+			for i in field_size * field_size:
+				@warning_ignore("integer_division")
+				var pos : Vector2i = Vector2i( i % field_size, i / field_size )
 				if field_list[pos.y][pos.x].has_card(): continue
 				field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.DEPLOY)
-			_:
-				# In a radius around the king.
-				pass
+		_:
+			if !kings.has(multiplayer.get_remote_sender_id()): return
+			for i in field_size * field_size:
+				@warning_ignore("integer_division")
+				var pos : Vector2i = Vector2i( i % field_size, i / field_size )
+				if abs(pos - kings[multiplayer.get_remote_sender_id()].pos).x + abs(pos - kings[multiplayer.get_remote_sender_id()].pos).y  <= 2 && !field_list[pos.y][pos.x].has_card():
+					field_list[pos.y][pos.x].set_highlight(Highlight.HighlightType.DEPLOY)
 
 
 
@@ -82,10 +86,13 @@ func clear_highlights() -> void:
 
 
 func set_card_to(card : CardActive, pos : Vector2i) -> void:
-	#card.owner_id = multiplayer.get_remote_sender_id() # No multiplayer yet.
+	card.owner_id = multiplayer.get_remote_sender_id()
+	if card.card_base.type == "king":
+		kings[multiplayer.get_remote_sender_id()] = card
 	cards.append(card)
 	field_list[pos.y][pos.x].set_card(card)
 	card.pos = pos
+	card.size = field_list[pos.y][pos.x].size
 	card.global_position = field_list[pos.y][pos.x].global_position
 
 func move_card_to(card : CardActive, pos : Vector2i) -> void:

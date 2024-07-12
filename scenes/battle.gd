@@ -10,11 +10,13 @@ class_name Battle
 @onready var card_root : Control = %Cards
 @onready var hand : Hand = $InteractiveRegion/UserUI/Hand
 
+var card_active = preload("res://components/card_active.tscn")
+
 var field : Field
 
 var is_turn : bool
 
-var selected_card
+var field_selected_card : CardActive
 
 
 
@@ -23,20 +25,29 @@ func _ready() -> void:
 	DisplayServer.window_set_min_size(Vector2i(340, 620))
 	field = Field.new()
 	center_field.add_child(field)
+	center_field.move_child(field, 0)
+
+	field.field_clicked.connect(on_field_clicked)
+	hand.card_selected.connect(select_card)
 
 
 
 func next_turn() -> void:
-	selected_card = null
+	field_selected_card = null
 	for card in card_root.get_children():
 		card.has_moved = false
 		card.has_attacked = false
 
-func select_card(card : CardActive) -> void:
+func select_card(card) -> void:
 	field.clear_highlights()
-	selected_card = card
-	if !card: return
-	field.highlight_from_position(card.pos)
+	if card is CardActive:
+		hand.deselect_card()
+		field_selected_card = card
+		field.highlight_from_position(card.pos)
+	elif card is CardHand:
+		field.highlight_from_hand(card.card_base.id)
+	else:
+		return
 
 func on_field_clicked(pos : Vector2i) -> void:
 	var selected_field : FieldPanel = field.field_list[pos.y][pos.x]
@@ -44,27 +55,26 @@ func on_field_clicked(pos : Vector2i) -> void:
 	match selected_field.get_type():
 		FieldPanel.PanelType.CARD:
 			# Check if card is your own here.
-			if selected_card == selected_field.get_card():
+			if field_selected_card == selected_field.get_card():
 				select_card(null)
 				return
 			select_card(selected_field.get_card())
 		FieldPanel.PanelType.MOVE:
-			if !selected_card: return
-			selected_card.has_moved = true
-			field.move_card_to(selected_card, pos)
+			if !field_selected_card: return
+			field_selected_card.has_moved = true
+			field.move_card_to(field_selected_card, pos)
 			select_card(null)
 		FieldPanel.PanelType.ATTACK:
-			if !selected_card: return
-			selected_card.has_attacked = true
-			field.attack_card_at(selected_card, pos)
+			if !field_selected_card: return
+			field_selected_card.has_attacked = true
+			field.attack_card_at(field_selected_card, pos)
 			select_card(null)
 		FieldPanel.PanelType.DEPLOY:
-			# Might need to migrate the paneltype into a fieldtype/paneltype system next time.
-			# - Otherwise cards can still be selected while deploying a card.
-			# - Other solution could be to make selecting a card clear any focus in the hand as well.
+			var card : CardActive = card_active.instantiate()
+			card.card_base = hand.selected_card.card_base
+			card_root.add_child(card)
+			field.set_card_to(card, pos)
+			hand.deploy_selected_card()
+			select_card(null)
 
-			pass
-
-
-func _on_hand_card_selected(card) -> void:
-	pass # Replace with function body.
+	hand.deselect_card()

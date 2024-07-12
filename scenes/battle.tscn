@@ -214,4 +214,3 @@ vertical_alignment = 1
 autowrap_mode = 2
 
 [connection signal="pressed" from="InteractiveRegion/UserUI/Button" to="." method="next_turn"]
-[connection signal="card_selected" from="InteractiveRegion/UserUI/Hand" to="." method="_on_hand_card_selected"]

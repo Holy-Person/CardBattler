@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ccus4ggo3s3wu"
-path="res://.godot/imported/suzanne.png-dec957d16d36ec9701388ff0257c81da.ctex"
+uid="uid://bnvr1ghik0ds5"
+path="res://.godot/imported/icosphere.png-6f2b317cb9256a3f8194aae630316169.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://images/suzanne.png"
-dest_files=["res://.godot/imported/suzanne.png-dec957d16d36ec9701388ff0257c81da.ctex"]
+source_file="res://images/cards/icosphere.png"
+dest_files=["res://.godot/imported/icosphere.png-6f2b317cb9256a3f8194aae630316169.ctex"]
 
 [params]
 

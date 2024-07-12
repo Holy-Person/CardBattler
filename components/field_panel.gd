@@ -46,3 +46,10 @@ func set_highlight(type : Highlight.HighlightType) -> void:
 
 func clear_highlight() -> void:
 	highlight.type = Highlight.HighlightType.NONE
+
+
+
+func _draw() -> void:
+	if !card: return
+	card.set_size(size)
+	card.set_global_position(global_position)

@@ -67,5 +67,6 @@ func _physics_process(delta: float) -> void:
 	self_modulate = Color(0.65, 0.65, 0.65) if card.has_attacked else Color.WHITE
 	image.self_modulate = self_modulate if card.has_attacked else card_base.tint
 	shimmer.visible = false if card.has_moved || card.has_attacked else true
-	if shimmer.position.y < -250: shimmer.position.y = 125
-	shimmer.position.y -= delta * 350
+	if shimmer.position.y < size.y * -2: shimmer.position.y = size.y
+	shimmer.position.y -= delta * (size.y * 2.2)
+	shimmer.size = Vector2(size.x * 1.5, size.y / 4.5)

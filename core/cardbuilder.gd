@@ -46,8 +46,8 @@ func _get_card_from_id(id : String) -> CardBase:
 		card_base.set(field, data[field])
 
 	if !card_base.image:
-		if FileAccess.file_exists('res://images/%s.png' % [id]): card_base.image = load('res://images/%s.png' % [id])
+		if FileAccess.file_exists('res://images/cards/%s.png' % [id]): card_base.image = load('res://images/cards/%s.png' % [id])
 		else:
-			card_base.image = load('res://images/error.png')
+			card_base.image = load('res://images/cards/error.png')
 			card_base.tint = Color.RED
 	return card_base

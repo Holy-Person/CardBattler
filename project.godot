@@ -14,7 +14,9 @@ config/name="CardBattler"
 run/main_scene="res://scenes/battle.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
 boot_splash/bg_color=Color(0.309804, 0.34902, 0.745098, 1)
-config/icon="res://icon.svg"
+boot_splash/image="res://images/cb_no_background.png"
+boot_splash/fullsize=false
+config/icon="res://images/cb.png"
 
 [autoload]
 

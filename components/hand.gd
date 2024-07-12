@@ -11,6 +11,8 @@ var deck : Array[CardBase]
 var card_hand = load("res://components/card_hand.tscn")
 var card_group : ButtonGroup = ButtonGroup.new()
 
+var selected_card : CardHand
+
 signal card_selected(card : CardHand)
 
 
@@ -46,9 +48,19 @@ func draw_card() -> void:
 
 func select_card(state : bool, card : CardHand) -> void:
 	if !state:
-		card_selected.emit(null)
+		selected_card = null
 		return
+	selected_card = card
 	card_selected.emit(card)
+
+func deselect_card() -> void:
+	selected_card = null
+	if card_group.get_pressed_button():
+		card_group.get_pressed_button().set_pressed(false)
+
+func deploy_selected_card() -> void:
+	selected_card.queue_free()
+	selected_card = null
 
 func update_hand_visual() -> void:
 	for child in card_root.get_children():
